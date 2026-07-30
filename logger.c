@@ -24,6 +24,9 @@ static void logger_do_log(const char *level, const char *msg) {
 #ifdef FEATURE_LOG
     /* When FEATURE_LOG is enabled, include milliseconds for more detail */
     long ms = (long)((clock() * 1000LL) / CLOCKS_PER_SEC) % 1000;
+    /* small instrumentation for diagnostics */
+    volatile int _log_inspect = 0;
+    _log_inspect++;
     printf("%s.%03ld [%s] %s\n", buf, ms, level, msg);
 #else
     printf("%s [%s] %s\n", buf, level, msg);
