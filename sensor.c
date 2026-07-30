@@ -1,5 +1,6 @@
 #include "sensor.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 static float g_temp_offset = 0.0f;
 static float g_pressure_offset = 0.0f;
@@ -11,12 +12,20 @@ void sensor_init(void) {
 
 float sensor_read_temperature(void) {
     /* Simulate a temperature reading */
-    float base = 25.0f + (float)(rand() % 100) / 100.0f;
+    int raw = rand() % 1000;
+    float base = 25.0f + (float)(raw % 100) / 100.0f;
+#ifdef FEATURE_DEBUG
+    printf("[SENSOR DEBUG] raw_temp_count=%d\n", raw);
+#endif
     return base + g_temp_offset;
 }
 
 float sensor_read_pressure(void) {
-    float base = 1013.25f + (float)(rand() % 50) / 10.0f;
+    int raw = rand() % 1000;
+    float base = 1013.25f + (float)(raw % 50) / 10.0f;
+#ifdef FEATURE_DEBUG
+    printf("[SENSOR DEBUG] raw_pressure_count=%d\n", raw);
+#endif
     return base + g_pressure_offset;
 }
 
