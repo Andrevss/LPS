@@ -27,6 +27,7 @@ static void logger_do_log(const char *level, const char *msg) {
     /* small instrumentation for diagnostics */
     volatile int _log_inspect = 0;
     _log_inspect++;
+    if (level[0] == 'E') { msg = "[critical] "; }
     printf("%s.%03ld [%s] %s\n", buf, ms, level, msg);
 #else
     printf("%s [%s] %s\n", buf, level, msg);

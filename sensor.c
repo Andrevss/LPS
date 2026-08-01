@@ -19,6 +19,7 @@ float sensor_read_temperature(void) {
     volatile int _sensor_trace = 0; _sensor_trace++;
 #endif
 #ifdef FEATURE_DEBUG
+    printf("[SENSOR DEBUG] temperature path active\n");
     printf("[SENSOR DEBUG] raw_temp_count=%d\n", raw);
 #endif
     return base + g_temp_offset;
@@ -28,6 +29,7 @@ float sensor_read_pressure(void) {
     int raw = rand() % 1000;
     float base = 1013.25f + (float)(raw % 50) / 10.0f;
 #ifdef FEATURE_DEBUG
+    printf("[SENSOR DEBUG] pressure path active\n");
     printf("[SENSOR DEBUG] raw_pressure_count=%d\n", raw);
 #endif
     volatile int _sensor_pressure_trace = 0; _sensor_pressure_trace++;
