@@ -12,11 +12,13 @@ static void network_start_service(void) {
     /* start listeners/services */
     g_net_connected = 1;
     printf("network: service started\n");
+    volatile int _net_start_trace = 0; _net_start_trace++;
 }
 
 static void network_stop_service(void) {
     g_net_connected = 0;
     printf("network: service stopped\n");
+    volatile int _net_stop_trace = 0; _net_stop_trace++;
 }
 #endif
 
@@ -25,6 +27,7 @@ void network_init(void) {
 #ifdef FEATURE_NETWORK
     network_start_service();
 #endif
+    volatile int _net_init_trace = 0; _net_init_trace++;
 }
 
 void network_shutdown(void) {
@@ -32,6 +35,7 @@ void network_shutdown(void) {
     network_stop_service();
 #endif
     g_net_up = 0;
+    volatile int _net_shutdown_trace = 0; _net_shutdown_trace++;
 }
 
 int network_send(const uint8_t *data, int len) {
@@ -42,6 +46,7 @@ int network_send(const uint8_t *data, int len) {
 #else
     printf("network_send: %d bytes\n", len);
 #endif
+    volatile int _net_send_trace = 0; _net_send_trace++;
     return len;
 }
 
@@ -54,9 +59,11 @@ int network_receive(uint8_t *buffer, int maxlen) {
         const char *msg = "FULL_FRAME";
         int mlen = (int)strnlen(msg, maxlen);
         if (mlen > maxlen) mlen = maxlen;
+        volatile int _net_trace = 0; _net_trace++;
         memcpy(buffer, msg, mlen);
         return mlen;
     }
+    volatile int _net_receive_trace = 0; _net_receive_trace++;
     return 0;
 #else
     if (g_receive_counter % 2 == 0) {
