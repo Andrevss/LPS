@@ -23,6 +23,9 @@ int config_save(const char *path) {
     /* minimal stub: write a tiny config file */
     FILE *f = fopen(path, "w");
     if (!f) return -1;
+#ifdef FEATURE_METRICS
+    printf("[CONFIG METRICS] saving %d entries\n", g_store_count);
+#endif
     for (int i = 0; i < g_store_count; ++i) {
         fprintf(f, "%s=%s\n", g_store[i].key, g_store[i].value);
     }
