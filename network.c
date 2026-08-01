@@ -42,7 +42,7 @@ int network_send(const uint8_t *data, int len) {
     if (!g_net_up) return -1;
 #ifdef FEATURE_NETWORK
     if (!g_net_connected) return -2;
-    printf("network_send (full): %d bytes\n", len);
+    printf("network_send (complete): %d bytes\n", len);
 #else
     printf("network_send: %d bytes\n", len);
 #endif
