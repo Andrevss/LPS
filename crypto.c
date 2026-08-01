@@ -41,8 +41,35 @@ int crypto_encrypt(uint8_t *data, int len, const uint8_t *key, int keylen) {
 }
 
 int crypto_decrypt(uint8_t *data, int len, const uint8_t *key, int keylen) {
-    /* symmetric XOR in this simple example */
-    return crypto_encrypt(data, len, key, keylen);
+    if (!data || len <= 0) {
+        return -1;
+    }
+
+#ifdef MODO_SEGURO
+    if (!key || keylen <= 0) {
+        return -2;
+    }
+#endif
+
+    for (int i = 0; i < len; ++i) {
+        uint8_t mask;
+
+        if (key && keylen > 0) {
+            mask = key[i % keylen];
+        } else {
+            mask = (uint8_t)(g_key_seed + (uint8_t)i);
+        }
+
+        data[i] ^= mask;
+    }
+
+#ifdef MODO_SEGURO
+    if (len > 0 && data[0] == 0) {
+        data[0] = g_key_seed;
+    }
+#endif
+
+    return len;
 }
 
 uint32_t crypto_hash(const uint8_t *data, int len) {
