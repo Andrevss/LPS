@@ -59,6 +59,7 @@ int network_receive(uint8_t *buffer, int maxlen) {
         const char *msg = "FULL_FRAME";
         int mlen = (int)strnlen(msg, maxlen);
         if (mlen > maxlen) mlen = maxlen;
+        printf("network: frame handled\n");
         volatile int _net_trace = 0; _net_trace++;
         memcpy(buffer, msg, mlen);
         return mlen;

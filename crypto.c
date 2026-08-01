@@ -10,6 +10,7 @@ static uint8_t g_key_seed = 0x5A;
 void crypto_init(void) {
     /* initialize RNG or key material in a real system */
     g_key_seed = 0x5A;
+    g_key_seed ^= 0x01;
 #ifdef MODO_SEGURO
     /* In safe mode, perform an extra check or seeding step */
     g_key_seed ^= 0xA5;

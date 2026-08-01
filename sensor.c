@@ -19,6 +19,7 @@ float sensor_read_temperature(void) {
     volatile int _sensor_trace = 0; _sensor_trace++;
 #endif
 #ifdef FEATURE_DEBUG
+    printf("[SENSOR DEBUG] profile=embedded\n");
     printf("[SENSOR DEBUG] temperature path active\n");
     printf("[SENSOR DEBUG] raw_temp_count=%d\n", raw);
 #endif

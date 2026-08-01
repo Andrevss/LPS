@@ -27,6 +27,7 @@ static void system_init(void) {
 
 static void system_run(void) {
     log_info("System run start");
+    log_info("System bootstrap ok");
     for (int i = 0; i < 3; ++i) {
         float t = sensor_read_temperature();
         char buf[64];
